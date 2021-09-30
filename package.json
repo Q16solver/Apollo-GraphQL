@@ -1,0 +1,32 @@
+{
+  "name": "apollo-graphql",
+  "version": "1.0.0",
+  "description": "Basic starter kit for demonstrating GraphQL.",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "nodemon -r tsconfig-paths/register src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Q16solver/Apollo-GraphQL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Q16solver/Apollo-GraphQL/issues"
+  },
+  "homepage": "https://github.com/Q16solver/Apollo-GraphQL#readme",
+  "dependencies": {
+    "apollo-server-core": "^3.3.0",
+    "apollo-server-express": "^3.3.0",
+    "express": "^4.17.1",
+    "graphql": "^15.6.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13",
+    "ts-node": "^10.2.1",
+    "tsconfig-paths": "^3.11.0"
+  }
+}
