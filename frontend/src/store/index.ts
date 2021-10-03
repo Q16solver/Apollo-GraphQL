@@ -5,7 +5,7 @@ export const rootStore = createStore<EventState>({
   state: {
     user: "Adam Jahr",
     events: [],
-    event: {},
+    event: null,
   },
   mutations: {
     ADD_EVENT(state, event) {

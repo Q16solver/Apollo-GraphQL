@@ -3,9 +3,9 @@ import ErrorDisplay from "@/views/ErrorDisplay.vue";
 import EventCreate from "@/views/EventCreate.vue";
 import EventDetails from "@/views/EventDetails.vue";
 import EventList from "@/views/EventList.vue";
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "EventList",
