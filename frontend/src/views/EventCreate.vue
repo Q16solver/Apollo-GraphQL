@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { EventState } from "@/store/types";
+import { Event, EventState } from "@/store/types";
 import { ref } from "@vue/runtime-core";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "vue-router";
@@ -56,22 +56,22 @@ const event = ref({
 });
 
 const onSubmit = async () => {
-  const newEvent = {
-    ...event,
+  const newEvent: Event = {
+    ...event.value,
     id: uuidv4(),
     organizer: store.getters.user,
   };
 
   try {
     await store.dispatch("createEvent", newEvent);
-    router.push({
+    await router.push({
       name: "EventDetails",
-      params: { id: event.value.id },
+      params: { id: newEvent.id },
     });
   } catch (error) {
-    router.push({
+    await router.push({
       name: "ErrorDisplay",
-      params: { error: (error as Error).message },
+      params: { error },
     });
   }
 };
