@@ -5,7 +5,7 @@ interface EventState {
 }
 
 interface Event {
-  id: number;
+  id: string;
   category: string;
   title: string;
   description: string;

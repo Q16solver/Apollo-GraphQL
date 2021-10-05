@@ -25,9 +25,8 @@ const main = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
-  // Modified server startup
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  // Server startup
+  httpServer.listen(4000, () => console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));
 };
 
 main().catch((err) => console.error(err));
