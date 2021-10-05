@@ -1,4 +1,5 @@
 module.exports = {
+  ignorePatterns: ["src/generated/**"],
   root: true,
   env: {
     node: true,

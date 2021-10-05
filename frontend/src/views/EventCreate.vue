@@ -35,9 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { Event, EventState } from "@/store/types";
+import { useCreateEventMutation } from "@/generated/graphql";
+import { EventState } from "@/store/types";
 import { ref } from "@vue/runtime-core";
-import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -54,24 +54,22 @@ const event = ref({
   time: "",
   organizer: "",
 });
+const { mutate: createEvent } = useCreateEventMutation();
 
 const onSubmit = async () => {
-  const newEvent: Event = {
-    ...event.value,
-    id: uuidv4(),
-    organizer: store.getters.user,
-  };
+  const response = await createEvent();
 
-  try {
-    await store.dispatch("createEvent", newEvent);
+  if (response?.data?.createEvent) {
+    delete response?.data?.createEvent.__typename;
+    await store.dispatch("createEvent", response.data.createEvent);
     await router.push({
       name: "EventDetails",
-      params: { id: newEvent.id },
+      params: { id: response.data.createEvent.id },
     });
-  } catch (error) {
+  } else {
     await router.push({
       name: "ErrorDisplay",
-      params: { error },
+      params: { error: "Failed to create event" },
     });
   }
 };
