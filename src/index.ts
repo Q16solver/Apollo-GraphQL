@@ -1,4 +1,4 @@
-import { UserResolver } from "@resolvers/user";
+import { EventResolver } from "@resolvers/event";
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
@@ -11,7 +11,7 @@ const main = async () => {
   const app = express();
   const httpServer = http.createServer(app);
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [EventResolver],
     validate: false,
   });
 
@@ -25,9 +25,8 @@ const main = async () => {
   await server.start();
   server.applyMiddleware({ app });
 
-  // Modified server startup
-  await new Promise((resolve) => httpServer.listen({ port: 4000 }, resolve));
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  // Server startup
+  httpServer.listen(4000, () => console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));
 };
 
 main().catch((err) => console.error(err));

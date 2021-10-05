@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "id": 123,
+      "id": "0193dd4c-1879-4657-9678-e9171210fc3f",
       "category": "animal welfare",
       "title": "Cat Adoption Day",
       "description": "Find your new feline friend at this event.",
@@ -11,7 +11,7 @@
       "organizer": "Kat Laydee"
     },
     {
-      "id": 456,
+      "id": "afbad1fc-7727-449c-bc36-004ed9847756",
       "category": "food",
       "title": "Community Gardening",
       "description": "Join us as we tend to the community edible plants.",
@@ -21,7 +21,7 @@
       "organizer": "Fern Pollin"
     },
     {
-      "id": 789,
+      "id": "110e8dea-5ed5-47d2-acd7-a65478839aa6",
       "category": "sustainability",
       "title": "Beach Cleanup",
       "description": "Help pick up trash along the shore.",
@@ -51,36 +51,6 @@
       "organizer": "Adam Jahr"
     },
     {
-      "id": "110e8dea-5ed5-47d2-acd7-a65478839aa6",
-      "category": "housing",
-      "title": "House Event Test",
-      "description": "",
-      "location": "",
-      "date": "",
-      "time": "",
-      "organizer": "Adam Jahr"
-    },
-    {
-      "id": "0193dd4c-1879-4657-9678-e9171210fc3f",
-      "category": "nature",
-      "title": "Nature Event",
-      "description": "Description here",
-      "location": "wilderness",
-      "date": "July 4",
-      "time": "9:00",
-      "organizer": "Adam Jahr"
-    },
-    {
-      "id": "afbad1fc-7727-449c-bc36-004ed9847756",
-      "category": "education",
-      "title": "Education Event",
-      "description": "Learning time",
-      "location": "School",
-      "date": "July 4",
-      "time": "9:00",
-      "organizer": "Adam Jahr"
-    },
-    {
       "id": "b1220465-e318-4a8f-976d-e125fa608811",
       "category": "animal welfare",
       "title": "Monkey Test",
@@ -88,26 +58,6 @@
       "location": "locafkjdf",
       "date": "July 4",
       "time": "9:00",
-      "organizer": "Adam Jahr"
-    },
-    {
-      "id": "15a10594-2b39-46de-bfba-6bf7168a003f",
-      "category": "",
-      "title": "",
-      "description": "",
-      "location": "",
-      "date": "",
-      "time": "",
-      "organizer": "Adam Jahr"
-    },
-    {
-      "id": "dc627e04-d719-4616-a004-e1be385a60be",
-      "category": "",
-      "title": "",
-      "description": "",
-      "location": "",
-      "date": "",
-      "time": "",
       "organizer": "Adam Jahr"
     },
     {
@@ -121,24 +71,14 @@
       "organizer": "Adam Jahr"
     },
     {
-      "id": "61034fe9-cf5e-41f3-bb70-58332345e0ad",
-      "category": "",
-      "title": "",
-      "description": "",
-      "location": "",
-      "date": "",
-      "time": "",
-      "organizer": "Adam Jahr"
-    },
-    {
-      "id": "f9b7ed27-d5bc-4003-8c46-e96631e69671",
-      "category": "",
-      "title": "",
-      "description": "",
-      "location": "",
-      "date": "",
-      "time": "",
-      "organizer": "Adam Jahr"
+      "id": "b852cdca-2bbb-459f-9940-323d5eba8e18",
+      "category": "teDfgbzfcc",
+      "title": "XMbF7b9bc3",
+      "description": "FR0lsDToxs",
+      "location": "gJ1DsVybzz",
+      "date": "4V2eEVRX7b",
+      "time": "veTQ5fM1Jo",
+      "organizer": "Knt50UsjW4"
     }
   ]
 }

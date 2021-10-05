@@ -1,4 +1,3 @@
-import About from "@/views/About.vue";
 import ErrorDisplay from "@/views/ErrorDisplay.vue";
 import EventCreate from "@/views/EventCreate.vue";
 import EventDetails from "@/views/EventDetails.vue";
@@ -21,11 +20,6 @@ const routes: RouteRecordRaw[] = [
     path: "/event/create",
     name: "EventCreate",
     component: EventCreate,
-  },
-  {
-    path: "/about",
-    name: "About",
-    component: About,
   },
   {
     path: "/error/:error",

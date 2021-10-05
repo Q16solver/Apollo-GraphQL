@@ -3,7 +3,6 @@
 
   <div class="form-container">
     <form @submit.prevent="onSubmit">
-      <label>Select a category: </label>
       <select v-model="event.category">
         <option v-for="option in categories" :value="option" :key="option" :selected="option === event.category">
           {{ option }}
@@ -35,52 +34,43 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
-import { v4 as uuidv4 } from "uuid";
-import { mapActions, mapState } from "vuex";
+<script setup lang="ts">
+import { useCreateEventMutation } from "@/generated/graphql";
+import { EventState } from "@/store/types";
+import { ref } from "@vue/runtime-core";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-export default defineComponent({
-  data() {
-    return {
-      categories: ["sustainability", "nature", "animal welfare", "housing", "education", "food", "community"],
-      event: {
-        id: "",
-        category: "",
-        title: "",
-        description: "",
-        location: "",
-        date: "",
-        time: "",
-        organizer: "",
-      },
-    };
-  },
-  methods: {
-    ...mapActions(["createEvent"]),
-    async onSubmit() {
-      const event = {
-        ...this.event,
-        id: uuidv4(),
-        organizer: this.user,
-      };
-
-      try {
-        await this.createEvent(event);
-        this.$router.push({
-          name: "EventDetails",
-          params: { id: event.id },
-        });
-      } catch (error) {
-        this.$router.push({
-          name: "ErrorDisplay",
-          params: { error },
-        });
-      }
-    },
-  },
-  computed: {
-    ...mapState(["event", "user"]),
-  },
+const store = useStore<EventState>();
+const router = useRouter();
+const categories = ["sustainability", "nature", "animal welfare", "housing", "education", "food", "community"];
+const event = ref({
+  id: "",
+  category: "",
+  title: "",
+  description: "",
+  location: "",
+  date: "",
+  time: "",
+  organizer: "",
 });
+const { mutate: createEvent } = useCreateEventMutation();
+
+const onSubmit = async () => {
+  const response = await createEvent();
+
+  if (response?.data?.createEvent) {
+    delete response?.data?.createEvent.__typename;
+    await store.dispatch("createEvent", response.data.createEvent);
+    await router.push({
+      name: "EventDetails",
+      params: { id: response.data.createEvent.id },
+    });
+  } else {
+    await router.push({
+      name: "ErrorDisplay",
+      params: { error: "Failed to create event" },
+    });
+  }
+};
 </script>

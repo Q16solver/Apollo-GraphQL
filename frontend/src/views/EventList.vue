@@ -18,7 +18,7 @@ export default defineComponent({
     } catch (error) {
       this.$router.push({
         name: "ErrorDisplay",
-        params: { error: error },
+        params: { error: (error as Error).message },
       });
     }
   },

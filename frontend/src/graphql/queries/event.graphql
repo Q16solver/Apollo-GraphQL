@@ -1,0 +1,12 @@
+query Event {
+  event {
+    id
+    category
+    title
+    description
+    location
+    date
+    time
+    organizer
+  }
+}
