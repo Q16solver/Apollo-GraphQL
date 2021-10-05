@@ -1,4 +1,4 @@
-import { UserResolver } from "@resolvers/user";
+import { EventResolver } from "@resolvers/event";
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
@@ -11,7 +11,7 @@ const main = async () => {
   const app = express();
   const httpServer = http.createServer(app);
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [EventResolver],
     validate: false,
   });
 

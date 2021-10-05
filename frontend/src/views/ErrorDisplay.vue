@@ -7,6 +7,6 @@
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
-  props: ["error"],
+  props: { error: { type: String } },
 });
 </script>

@@ -29,6 +29,7 @@ export type Event = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createEvent: Event;
   randomMutation: Scalars['String'];
 };
 
@@ -38,12 +39,49 @@ export type Query = {
   randomQuery: Scalars['String'];
 };
 
+export type CreateEventMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string } };
+
 export type EventQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type EventQuery = { __typename?: 'Query', event: { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string } };
 
 
+export const CreateEventDocument = gql`
+    mutation CreateEvent {
+  createEvent {
+    id
+    category
+    title
+    description
+    location
+    date
+    time
+    organizer
+  }
+}
+    `;
+
+/**
+ * __useCreateEventMutation__
+ *
+ * To run a mutation, you first call `useCreateEventMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `useCreateEventMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = useCreateEventMutation();
+ */
+export function useCreateEventMutation(options: VueApolloComposable.UseMutationOptions<CreateEventMutation, CreateEventMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateEventMutation, CreateEventMutationVariables>> = {}) {
+  return VueApolloComposable.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument, options);
+}
+export type CreateEventMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateEventMutation, CreateEventMutationVariables>;
 export const EventDocument = gql`
     query Event {
   event {
