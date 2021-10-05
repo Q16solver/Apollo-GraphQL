@@ -3,10 +3,8 @@
 
   <div class="form-container">
     <form @submit.prevent="onSubmit">
-      <label>Select a category: {{ event }}</label>
-      <label>Select a category: {{ categories }}</label>
       <select v-model="event.category">
-        <option v-for="option in categories" :value="option" :key="option" :selected="option === event.value.category">
+        <option v-for="option in categories" :value="option" :key="option" :selected="option === event.category">
           {{ option }}
         </option>
       </select>
