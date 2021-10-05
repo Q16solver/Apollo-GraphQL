@@ -1,10 +1,10 @@
-interface EventState {
+export interface EventState {
   user: string;
   events: Event[];
   event: Event | null;
 }
 
-interface Event {
+export interface Event {
   id: string;
   category: string;
   title: string;

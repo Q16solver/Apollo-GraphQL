@@ -1,4 +1,5 @@
 import { EventService } from "@/services/EventService";
+import { EventState } from "@/store/types";
 import { createStore } from "vuex";
 
 export const rootStore = createStore<EventState>({

@@ -3,9 +3,10 @@
 
   <div class="form-container">
     <form @submit.prevent="onSubmit">
-      <label>Select a category: </label>
+      <label>Select a category: {{ event }}</label>
+      <label>Select a category: {{ categories }}</label>
       <select v-model="event.category">
-        <option v-for="option in categories" :value="option" :key="option" :selected="option === event.category">
+        <option v-for="option in categories" :value="option" :key="option" :selected="option === event.value.category">
           {{ option }}
         </option>
       </select>
@@ -35,52 +36,45 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+<script setup lang="ts">
+import { EventState } from "@/store/types";
+import { ref } from "@vue/runtime-core";
 import { v4 as uuidv4 } from "uuid";
-import { mapActions, mapState } from "vuex";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-export default defineComponent({
-  data() {
-    return {
-      categories: ["sustainability", "nature", "animal welfare", "housing", "education", "food", "community"],
-      event: {
-        id: "",
-        category: "",
-        title: "",
-        description: "",
-        location: "",
-        date: "",
-        time: "",
-        organizer: "",
-      },
-    };
-  },
-  methods: {
-    ...mapActions(["createEvent"]),
-    async onSubmit() {
-      const event = {
-        ...this.event,
-        id: uuidv4(),
-        organizer: this.user,
-      };
-
-      try {
-        await this.createEvent(event);
-        this.$router.push({
-          name: "EventDetails",
-          params: { id: event.id },
-        });
-      } catch (error) {
-        this.$router.push({
-          name: "ErrorDisplay",
-          params: { error: (error as Error).message },
-        });
-      }
-    },
-  },
-  computed: {
-    ...mapState(["event", "user"]),
-  },
+const store = useStore<EventState>();
+const router = useRouter();
+const categories = ["sustainability", "nature", "animal welfare", "housing", "education", "food", "community"];
+const event = ref({
+  id: "",
+  category: "",
+  title: "",
+  description: "",
+  location: "",
+  date: "",
+  time: "",
+  organizer: "",
 });
+
+const onSubmit = async () => {
+  const newEvent = {
+    ...event,
+    id: uuidv4(),
+    organizer: store.getters.user,
+  };
+
+  try {
+    await store.dispatch("createEvent", newEvent);
+    router.push({
+      name: "EventDetails",
+      params: { id: event.value.id },
+    });
+  } catch (error) {
+    router.push({
+      name: "ErrorDisplay",
+      params: { error: (error as Error).message },
+    });
+  }
+};
 </script>
