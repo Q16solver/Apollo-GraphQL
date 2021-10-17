@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 @Resolver()
 export class EventResolver {
   @Query(() => Event)
-  async event(): Promise<Event> {
+  async getEvent(): Promise<Event> {
     return {
       id: uuidv4(),
       category: makeId(10),
@@ -31,7 +31,7 @@ export class EventResolver {
   }
 
   @Subscription(() => Event, { topics: "Event" })
-  async eventSubscription(@Root() payload: Event): Promise<Event> {
+  async event(@Root() payload: Event): Promise<Event> {
     return payload;
   }
 }

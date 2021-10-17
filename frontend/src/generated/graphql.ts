@@ -27,43 +27,74 @@ export type Event = {
   title: Scalars['String'];
 };
 
+export type EventInput = {
+  category: Scalars['String'];
+  date: Scalars['String'];
+  description: Scalars['String'];
+  location: Scalars['String'];
+  organizer: Scalars['String'];
+  time: Scalars['String'];
+  title: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createEvent: Event;
-  randomMutation: Scalars['String'];
+};
+
+
+export type MutationCreateEventArgs = {
+  input: EventInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  event: Event;
-  randomQuery: Scalars['String'];
+  getEvent: Event;
 };
 
-export type CreateEventMutationVariables = Exact<{ [key: string]: never; }>;
+export type Subscription = {
+  __typename?: 'Subscription';
+  event: Event;
+};
+
+export type RegularEventFragment = { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string };
+
+export type CreateEventMutationVariables = Exact<{
+  input: EventInput;
+}>;
 
 
 export type CreateEventMutation = { __typename?: 'Mutation', createEvent: { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string } };
 
-export type EventQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetEventQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type EventQuery = { __typename?: 'Query', event: { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string } };
+export type GetEventQuery = { __typename?: 'Query', getEvent: { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string } };
+
+export type EventSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export const CreateEventDocument = gql`
-    mutation CreateEvent {
-  createEvent {
-    id
-    category
-    title
-    description
-    location
-    date
-    time
-    organizer
-  }
+export type EventSubscription = { __typename?: 'Subscription', event: { __typename?: 'Event', id: string, category: string, title: string, description: string, location: string, date: string, time: string, organizer: string } };
+
+export const RegularEventFragmentDoc = gql`
+    fragment RegularEvent on Event {
+  id
+  category
+  title
+  description
+  location
+  date
+  time
+  organizer
 }
     `;
+export const CreateEventDocument = gql`
+    mutation CreateEvent($input: EventInput!) {
+  createEvent(input: $input) {
+    ...RegularEvent
+  }
+}
+    ${RegularEventFragmentDoc}`;
 
 /**
  * __useCreateEventMutation__
@@ -76,40 +107,61 @@ export const CreateEventDocument = gql`
  * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
  *
  * @example
- * const { mutate, loading, error, onDone } = useCreateEventMutation();
+ * const { mutate, loading, error, onDone } = useCreateEventMutation({
+ *   variables: {
+ *     input: // value for 'input'
+ *   },
+ * });
  */
-export function useCreateEventMutation(options: VueApolloComposable.UseMutationOptions<CreateEventMutation, CreateEventMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateEventMutation, CreateEventMutationVariables>> = {}) {
+export function useCreateEventMutation(options: VueApolloComposable.UseMutationOptions<CreateEventMutation, CreateEventMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<CreateEventMutation, CreateEventMutationVariables>>) {
   return VueApolloComposable.useMutation<CreateEventMutation, CreateEventMutationVariables>(CreateEventDocument, options);
 }
 export type CreateEventMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<CreateEventMutation, CreateEventMutationVariables>;
-export const EventDocument = gql`
-    query Event {
-  event {
-    id
-    category
-    title
-    description
-    location
-    date
-    time
-    organizer
+export const GetEventDocument = gql`
+    query GetEvent {
+  getEvent {
+    ...RegularEvent
   }
 }
-    `;
+    ${RegularEventFragmentDoc}`;
 
 /**
- * __useEventQuery__
+ * __useGetEventQuery__
  *
- * To run a query within a Vue component, call `useEventQuery` and pass it any options that fit your needs.
- * When your component renders, `useEventQuery` returns an object from Apollo Client that contains result, loading and error properties
+ * To run a query within a Vue component, call `useGetEventQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventQuery` returns an object from Apollo Client that contains result, loading and error properties
  * you can use to render your UI.
  *
  * @param options that will be passed into the query, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/query.html#options;
  *
  * @example
- * const { result, loading, error } = useEventQuery();
+ * const { result, loading, error } = useGetEventQuery();
  */
-export function useEventQuery(options: VueApolloComposable.UseQueryOptions<EventQuery, EventQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<EventQuery, EventQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<EventQuery, EventQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<EventQuery, EventQueryVariables>(EventDocument, {}, options);
+export function useGetEventQuery(options: VueApolloComposable.UseQueryOptions<GetEventQuery, GetEventQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<GetEventQuery, GetEventQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<GetEventQuery, GetEventQueryVariables>> = {}) {
+  return VueApolloComposable.useQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, {}, options);
 }
-export type EventQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<EventQuery, EventQueryVariables>;
+export type GetEventQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<GetEventQuery, GetEventQueryVariables>;
+export const EventDocument = gql`
+    subscription Event {
+  event {
+    ...RegularEvent
+  }
+}
+    ${RegularEventFragmentDoc}`;
+
+/**
+ * __useEventSubscription__
+ *
+ * To run a query within a Vue component, call `useEventSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useEventSubscription` returns an object from Apollo Client that contains result, loading and error properties
+ * you can use to render your UI.
+ *
+ * @param options that will be passed into the subscription, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/subscription.html#options;
+ *
+ * @example
+ * const { result, loading, error } = useEventSubscription();
+ */
+export function useEventSubscription(options: VueApolloComposable.UseSubscriptionOptions<EventSubscription, EventSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<EventSubscription, EventSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<EventSubscription, EventSubscriptionVariables>> = {}) {
+  return VueApolloComposable.useSubscription<EventSubscription, EventSubscriptionVariables>(EventDocument, {}, options);
+}
+export type EventSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<EventSubscription, EventSubscriptionVariables>;

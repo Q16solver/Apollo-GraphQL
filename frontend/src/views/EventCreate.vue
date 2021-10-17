@@ -54,7 +54,7 @@ const event = ref({
   time: "",
   organizer: "",
 });
-const { mutate: createEvent } = useCreateEventMutation();
+const { mutate: createEvent } = useCreateEventMutation({});
 
 const onSubmit = async () => {
   const response = await createEvent();
