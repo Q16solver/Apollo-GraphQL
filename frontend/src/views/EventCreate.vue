@@ -45,7 +45,6 @@ const store = useStore<EventState>();
 const router = useRouter();
 const categories = ["sustainability", "nature", "animal welfare", "housing", "education", "food", "community"];
 const event = ref({
-  id: "",
   category: "",
   title: "",
   description: "",
