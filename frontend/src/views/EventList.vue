@@ -1,32 +1,45 @@
 <template>
   <h1>Events for {{ user }}</h1>
   <div class="events">
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <EventCard v-for="event in getEvent" :key="event.id" :event="event" />
   </div>
 </template>
 
 <script lang="ts">
-import EventCard from "@/components/EventCard.vue";
-import { defineComponent } from "@vue/runtime-core";
-import { mapActions, mapState } from "vuex";
-
+import EventCard from '@/components/EventCard.vue';
+import { defineComponent } from '@vue/runtime-core';
+import { mapActions, mapState } from 'vuex';
+import gql from 'graphql-tag';
 export default defineComponent({
   components: { EventCard },
-  async created() {
-    try {
-      await this.fetchEvents();
-    } catch (error) {
-      this.$router.push({
-        name: "ErrorDisplay",
-        params: { error: (error as Error).message },
-      });
-    }
+  apollo: {
+    // Vue-Apollo options here
+    getEvent: gql`
+      query Event {
+        getEvent {
+          id
+          category
+          title
+          description
+          location
+          date
+          time
+          organizer
+        }
+      }
+    `,
   },
+  created() {},
   methods: {
-    ...mapActions(["fetchEvents"]),
+    ...mapActions(['fetchEvents']),
   },
   computed: {
-    ...mapState(["events", "user"]),
+    ...mapState(['events', 'user']),
+  },
+  data() {
+    return {
+      getEvent: [],
+    };
   },
 });
 </script>

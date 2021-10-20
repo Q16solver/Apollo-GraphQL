@@ -7,26 +7,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
-import { mapActions, mapState } from "vuex";
+import { defineComponent } from '@vue/runtime-core';
+import { mapActions, mapState } from 'vuex';
 
 export default defineComponent({
-  props: ["id"],
+  props: ['id'],
   async created() {
     try {
       await this.fetchEvent(this.id);
     } catch (error) {
       this.$router.push({
-        name: "ErrorDisplay",
+        name: 'ErrorDisplay',
         params: { error: (error as Error).message },
       });
     }
   },
   methods: {
-    ...mapActions(["fetchEvent"]),
+    ...mapActions(['fetchEvent']),
   },
   computed: {
-    ...mapState(["event"]),
+    ...mapState(['event']),
   },
 });
 </script>

@@ -1,12 +1,25 @@
-import { ApolloClient, ApolloLink, createHttpLink, FetchResult, InMemoryCache, Operation, split } from "@apollo/client";
-import { getMainDefinition, Observable } from "@apollo/client/utilities";
-import { GraphQLError, print } from "graphql";
-import { Client, ClientOptions, createClient as createWsClient } from "graphql-ws";
+import {
+  ApolloClient,
+  ApolloLink,
+  createHttpLink,
+  FetchResult,
+  InMemoryCache,
+  Operation,
+  split,
+} from '@apollo/client/core';
+import { getMainDefinition, Observable } from '@apollo/client/utilities';
+import { createApolloProvider } from '@vue/apollo-option';
+import { GraphQLError, print } from 'graphql';
+import {
+  Client,
+  ClientOptions,
+  createClient as createWsClient,
+} from 'graphql-ws';
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: "http://localhost:4000/graphql",
+  uri: 'http://localhost:4000/graphql',
 });
 
 export class WebSocketLink extends ApolloLink {
@@ -25,7 +38,8 @@ export class WebSocketLink extends ApolloLink {
 
           this.restart = () => {
             // if the socket is still open for the restart, do the restart
-            if (wsSocket.readyState === WebSocket.OPEN) wsSocket.close(4205, "Client Restart");
+            if (wsSocket.readyState === WebSocket.OPEN)
+              wsSocket.close(4205, 'Client Restart');
             // otherwise the socket might've closed, indicate that you want
             // a restart on the next opened event
             else this.restartRequested = true;
@@ -53,9 +67,18 @@ export class WebSocketLink extends ApolloLink {
             else if (err instanceof CloseEvent)
               return sink.error(
                 // reason will be available on clean closes
-                new Error(`Socket closed with event ${err.code} ${err.reason || ""}`)
+                new Error(
+                  `Socket closed with event ${err.code} ${err.reason || ''}`
+                )
               );
-            else return sink.error(new Error((err as GraphQLError[]).map(({ message }) => message).join(", ")));
+            else
+              return sink.error(
+                new Error(
+                  (err as GraphQLError[])
+                    .map(({ message }) => message)
+                    .join(', ')
+                )
+              );
           },
         }
       );
@@ -68,7 +91,7 @@ export class WebSocketLink extends ApolloLink {
 
 // Create the subscription websocket link
 const wsLink = new WebSocketLink({
-  url: "ws://localhost:4000/subscriptions",
+  url: 'ws://localhost:4000/subscriptions',
 });
 
 // using the ability to split links, you can send data to each link
@@ -77,7 +100,10 @@ const link = split(
   // split based on operation type
   ({ query }) => {
     const definition = getMainDefinition(query);
-    return definition.kind === "OperationDefinition" && definition.operation === "subscription";
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
   },
   wsLink,
   httpLink
@@ -87,7 +113,11 @@ const link = split(
 const cache = new InMemoryCache();
 
 // Create the apollo client
-export const apolloClient = new ApolloClient({
+const apolloClient = new ApolloClient({
   link,
   cache,
+});
+
+export const provider = createApolloProvider({
+  defaultClient: apolloClient,
 });
